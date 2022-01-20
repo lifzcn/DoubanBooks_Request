@@ -7,6 +7,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+import pandas
 import csv
 
 header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -57,20 +58,21 @@ def pageResponse():
         # writer.writerow(infoDict.values())
         # file.close()
 
-        # dataFrame = pandas.DataFrame({"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList})
+        # dataFrame = pandas.DataFrame.from_dict({"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList},
+        #                                        orient="index")
         # dataFrame.to_csv("data.csv", index=False, sep=',')
 
-        # "书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList
-        # infoList = zip(nameList, authorList, scoreList, itemList)
+        # keyList = ["书名", "作者名", "评分", "主旨"]
+        # valueList = [nameList, authorList, scoreList, itemList]
+        # infoList = zip(keyList, valueList)
+        # infoDict = dict(infoList)
 
-        keyList = ["书名", "作者名", "评分", "主旨"]
-        valueList = [nameList, authorList, scoreList, itemList]
-        infoList = zip(keyList, valueList)
-        infoDict = dict(infoList)
+        infoList = zip(nameList, authorList, scoreList, itemList)
         file = open("data.csv", mode='a', encoding="utf-8")
         writer = csv.writer(file)
-        writer.writerow(infoDict.values())
+        writer.writerow(infoList)
         file.close()
+
     print("豆瓣TOP250书籍榜单信息获取完成!")
 
 
