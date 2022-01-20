@@ -7,7 +7,7 @@
 
 import requests
 from bs4 import BeautifulSoup
-import pandas
+# import pandas
 import csv
 
 header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -24,8 +24,13 @@ def allPage():
 
 
 def pageResponse():
+    keyList = ["书名", "信息", "评分", "主旨"]
+    file = open("data.csv", mode='a', encoding="utf-8")
+    writer = csv.writer(file)
+    writer.writerow(keyList)
+
     for url in allPage():
-        htmlResponse = requests.get(url, headers=header)
+        htmlResponse = requests.get(url, timeout=250, headers=header)
         htmlResponse.encoding = "utf-8"
         mainPage = BeautifulSoup(htmlResponse.text, "html.parser")
         nameMainInfoList = mainPage.find_all("div", class_="pl2")
@@ -73,14 +78,11 @@ def pageResponse():
         # writer.writerow(infoList)
         # file.close()
 
-        keyList = ["书名", "信息", "评分", "主旨"]
-        file = open("data.csv", mode='a', encoding="utf-8")
-        writer = csv.writer(file)
-        writer.writerow(keyList)
         for name, author, score, item in zip(nameList, authorList, scoreList, itemList):
             dataList = [name, author, score, item]
             writer.writerow(dataList)
-        file.close()
+
+    file.close()
 
     print("豆瓣TOP250书籍榜单信息获取完成!")
 
