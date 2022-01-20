@@ -69,7 +69,7 @@ def pageResponse():
 
         infoList = zip(nameList, authorList, scoreList, itemList)
         file = open("data.csv", mode='a', encoding="utf-8")
-        writer = csv.writer(file)
+        writer = csv.writer(file, delimiter='\n')
         writer.writerow(infoList)
         file.close()
 
