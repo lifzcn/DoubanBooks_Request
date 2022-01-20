@@ -52,25 +52,34 @@ def pageResponse():
             bookItem = item.get_text()
             itemList.append(bookItem)
 
-        # infoDict = {"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList}
+        # infoDict = {"书名": nameList, "信息": authorList, "评分": scoreList, "主旨": itemList}
         # file = open("data.csv", mode='a', encoding="utf-8")
         # writer = csv.writer(file)
         # writer.writerow(infoDict.values())
         # file.close()
 
-        # dataFrame = pandas.DataFrame.from_dict({"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList},
+        # dataFrame = pandas.DataFrame.from_dict({"书名": nameList, "信息": authorList, "评分": scoreList, "主旨": itemList},
         #                                        orient="index")
         # dataFrame.to_csv("data.csv", index=False, sep=',')
 
-        # keyList = ["书名", "作者名", "评分", "主旨"]
+        # keyList = ["书名", "信息", "评分", "主旨"]
         # valueList = [nameList, authorList, scoreList, itemList]
         # infoList = zip(keyList, valueList)
         # infoDict = dict(infoList)
 
-        infoList = zip(nameList, authorList, scoreList, itemList)
+        # infoList = zip(nameList, authorList, scoreList, itemList)
+        # file = open("data.csv", mode='a', encoding="utf-8")
+        # writer = csv.writer(file, delimiter='\n')
+        # writer.writerow(infoList)
+        # file.close()
+
+        keyList = ["书名", "信息", "评分", "主旨"]
         file = open("data.csv", mode='a', encoding="utf-8")
-        writer = csv.writer(file, delimiter='\n')
-        writer.writerow(infoList)
+        writer = csv.writer(file)
+        writer.writerow(keyList)
+        for name, author, score, item in zip(nameList, authorList, scoreList, itemList):
+            dataList = [name, author, score, item]
+            writer.writerow(dataList)
         file.close()
 
     print("豆瓣TOP250书籍榜单信息获取完成!")
