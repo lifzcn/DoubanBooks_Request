@@ -52,8 +52,14 @@ def pageResponse():
             bookItem = item.get_text()
             itemList.append(bookItem)
 
-        dataFrame = pandas.DataFrame({"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList})
-        dataFrame.to_csv("data.csv", index=False, sep=',')
+        infoDict = {"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList}
+        file = open("data.csv", mode='a', encoding="utf-8")
+        writer = csv.writer(file)
+        writer.writerow(infoDict.values())
+        file.close()
+
+        # dataFrame = pandas.DataFrame({"书名": nameList, "作者名": authorList, "评分": scoreList, "主旨": itemList})
+        # dataFrame.to_csv("data.csv", index=False, sep=',')
 
 
 if __name__ == "__main__":
